@@ -51,4 +51,24 @@ class Network(object):
             activations.append(activation)
         
         #backward pass
+
         delta = self.cost_derative(activations[-1], y) * sigmoid_prime(zs[-1])
+        nabla_b[-1] = delta
+        nabla_w[-1] = np.dot(delta, activations[-2].transpose())
+        for l in xrange(2, self.num_layers):
+            z = zs[-l]
+            sp = sigmoid_prime(z)
+            delta = np.dot(self.weights[-l+1].transpose(), delta) * sp
+            nabla_b[-l] = delta
+            nabla_w[-l] = np.dot(delta, activations[-l-1].transpose())
+        return (nabla_b, nabla_w)
+    
+    def evaluate(self, test_data):
+        test_results = [(np.argmax(self.feedforward(x)), y) for (x, y) in test_data]
+        return sum(int(x==y) for (x, y) in test_results)
+    
+    def sigmoid(z):
+        return 1.0/(1.0+np.exp(-z))
+
+    def sigmoid_prime(z):
+        return sigmoid(z)*(1-sigmoid(z))

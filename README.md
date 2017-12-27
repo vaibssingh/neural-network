@@ -1,4 +1,4 @@
-# Neural-Network
+# neural-network
 Handwritten digit recognition system trained on MNIST data. Taken from neuralnetworksanddeeplearning.com and updated to work with Python 3.6
 This NN gives accuracy upto 95-96%. To get started, just clone or download the repo and run folowing commands:
 		"import mnist_loader"
